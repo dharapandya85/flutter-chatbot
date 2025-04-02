@@ -6,9 +6,15 @@ app=Flask(__name__)
 
 #response
 def response():
-    query= dict(request.form)['query']
-    result= query+ " " +time.ctime()
-    return jsonify({"response":result})
+    try:
+        data= request.get_json()
+        if not data or 'message' not  in data:
+            return jsonify({"error":"Invalid request"}), 400
+        query= data['message']
+        bot_reply=f"Received:{query}"
+        return jsonify({"response":bot_reply})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__=="__main__":
     app.run(host="0.0.0..0",)
