@@ -13,13 +13,16 @@ GROQ_URL="https://api.groq.com/v1/chat/completions"
 #response
 def chatbot_response():
     try:
+        if request.content_type != "application/json":
+            return jsonify({"response":"Content-Type must be application/json"}), 415
         data= request.get_json()
         user_message=data.get("message","").strip()
         if not user_message:
             return jsonify({"response":"Please ask a financial question."})
         
         # Sending request to Groq API
-        headers={"Authorization":f"Bearer {GROQ_API_KEY}","Content-Type":"application/json"}
+        headers={"Authorization":f"Bearer {GROQ_API_KEY}",
+                 "Content-Type":"application/json"}
         payload={
             "model":"llama3-8b-8192",
             "messages":[
