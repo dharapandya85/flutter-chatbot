@@ -29,14 +29,14 @@ def chatbot_response():
             "temperature":0.7
         }
 
-        reponse=requests.post(GROQ_URL,headers=headers,json=payload)
+        response=requests.post(GROQ_URL,headers=headers,json=payload)
         if response.status_code== 200:
             bot_reply= response.json()["choices"][0]["message"]["content"]
             return jsonify({"response":bot_reply})
         else :
             return jsonify({"repsonse":"Error processing request."})
     except Exception as e:
-        return josnify({"response":f"Error: {str(e)}"})
+        return jsonify({"response":f"Error: {str(e)}"})
     
 if __name__=="__main__":
-    app.run(host="0.0.0..0",)
+    app.run(host="0.0.0.0",)
