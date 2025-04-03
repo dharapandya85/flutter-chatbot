@@ -8,8 +8,8 @@ app=Flask(__name__)
 GROQ_API_KEY=os.getenv("GROQ_API_KEY")
 
 GROQ_URL="https://api.groq.com/v1/chat/completions"
-@app.route("/bot",methods=["POST"])
 
+@app.route("/bot",methods=['POST','GET'])
 #response
 def chatbot_response():
     try:
